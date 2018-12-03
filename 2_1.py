@@ -2,14 +2,12 @@
 from collections import Counter
 
 input_file = "./input_2.txt"
-
+three = 0
+two = 0
 
 with open(input_file) as f:
     words = [l.strip() for l in f.readlines()]
 
-
-three = 0
-two = 0
 for word in words:
     letter_count = [count for letter, count in Counter(word).most_common()]
 
