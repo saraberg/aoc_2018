@@ -18,7 +18,6 @@ def sort_dict(d):
 
 
 def parse_input(instructions):
-    order = create_dict()
     prereq = create_dict()
 
     for line in instructions:
@@ -26,22 +25,18 @@ def parse_input(instructions):
         first_step = line[0]
         next_step = line[1].split(' can begin.')[0]
 
-        # Steps contains all steps that needs to be completed before the next step can begin
-        order[first_step].append(next_step)
-
         # Prereq contains all steps that must be completed before the current step can begin
         prereq[next_step].append(first_step)
 
-    sort_dict(order)
     sort_dict(prereq)
 
-    return order, prereq
+    return prereq
 
 
 with open('./input_7.txt') as f:
     instructions = f.read().splitlines()
 
-order, prereq = parse_input(instructions)
+prereq = parse_input(instructions)
 step_order = list()
 
 while prereq:
@@ -50,8 +45,7 @@ while prereq:
         if not prereq_steps:
             step_order.append(step)
 
-            # Remove the step as a prereq from the step order since it's executed
-            # for i in order[step]:
+            # Remove the step as a prereq since it's executed
             for key in prereq.keys():
                 if step in prereq[key]:
                     prereq[key].remove(step)
